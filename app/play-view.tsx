@@ -39,7 +39,7 @@ export function PlayView({song,children,onRead,onTranspose,onSave,dirty,saving,w
  },[song.content,song.transpose,song.key,song.id]);
  useLayoutEffect(()=>{
   const update=()=>setFullscreen(!!document.fullscreenElement);
-  document.addEventListener('fullscreenchange',update);return()=>document.removeEventListener('fullscreenchange',update);
+  update();document.addEventListener('fullscreenchange',update);return()=>document.removeEventListener('fullscreenchange',update);
  },[]);
  async function toggleFullscreen(){try{setFullscreenError('');if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{setFullscreenError('Full screen is unavailable here. The song still fits this window.')}}
  return <section className="play-view" aria-label="Whole song playing view">
