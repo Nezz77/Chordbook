@@ -18,7 +18,7 @@ Catalog references: https://www.shazam.com/artist/channuka/1599136249 and https:
 
 ## Storage and privacy
 
-Cloudflare D1 stores per-user overrides, new songs, favorites and selected keys. The initial collection is combined with these overrides when loading. A composite owner/song key isolates records. All writes require the platform-provided signed-in identity and use prepared statements. Failed saves preserve the editor's contents. The deployed site is private by default.
+Cloudflare D1 stores the personal library, favorites and selected keys. Access is protected by the owner-private Sites hosting policy; there is no second application sign-in. Reads merge the starter collection and all legacy per-user records in update order, preserving pre-update saved songs. New writes use a shared personal-songbook owner key and prepared statements. The site must remain private; making it public would require a separate write-authorization design. Failed saves preserve the editor contents. Add a song opens even during connection delays; the editor shows a retry action when saving is unavailable.
 
 ## Development
 
