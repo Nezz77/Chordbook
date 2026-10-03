@@ -2,7 +2,7 @@ import {database} from '../../../db';
 import {SEED} from '../../../lib/seed';
 import {z} from 'zod';
 export const dynamic='force-dynamic';
-const schema=z.object({id:z.string().min(1).max(160).regex(/^[a-zA-Z0-9-]+$/),title:z.string().trim().min(1).max(160),artist:z.string().max(160),language:z.enum(['English','Sinhala']),key:z.string().regex(/^(?:[A-G][#b]?m?)?$/),content:z.string().max(100000),source:z.string().max(2000).refine(s=>!s||/^https?:\/\//.test(s),'Use an http or https link'),transpose:z.number().int().min(-48).max(48),favorite:z.boolean(),updatedAt:z.number().optional()});
+const schema=z.object({id:z.string().min(1).max(160).regex(/^[a-zA-Z0-9-]+$/),title:z.string().trim().min(1).max(160),artist:z.string().max(160),language:z.enum(['English','Sinhala']),key:z.string().regex(/^(?:[A-G][#b]?m?)?$/),content:z.string().max(100000),source:z.string().max(2000).refine(s=>!s||/^https?:\/\//.test(s),'Use an http or https link'),transpose:z.number().int().min(-48).max(48),favorite:z.boolean(),capo:z.number().int().min(0).max(12).default(0),updatedAt:z.number().optional()});
 function failure(error:unknown){console.error('Songbook storage:',error);return Response.json({error:'Your songbook could not be saved or loaded. Please try again; your edits are still here.'},{status:503});}
 function sameOrigin(request:Request){const origin=request.headers.get('origin');return !origin||origin===new URL(request.url).origin;}
 export async function GET(){

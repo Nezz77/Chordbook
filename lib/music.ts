@@ -1,4 +1,4 @@
-export type Song = { id:string; title:string; artist:string; language:'English'|'Sinhala'; key:string; content:string; source:string; transpose:number; favorite:boolean; updatedAt?:number };
+export type Song = { id:string; title:string; artist:string; language:'English'|'Sinhala'; key:string; content:string; source:string; transpose:number; favorite:boolean; capo?:number; updatedAt?:number };
 export const NOTES=['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
 const SHARP=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 const FLAT=['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
@@ -44,3 +44,5 @@ export function normalizeSheet(input:string){
  return out.join('\n');
 }
 export function safeSource(url:string){try{const u=new URL(url);return ['https:','http:'].includes(u.protocol)?u.href:''}catch{return ''}}
+
+export function soundingKey(song:Song){return keyName({...song,transpose:song.transpose+(song.capo||0)})}
