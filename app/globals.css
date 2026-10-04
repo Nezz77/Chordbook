@@ -21,3 +21,18 @@
 @media(max-width:760px){.play-capo-summary{font-size:10px}.play-actions .capo-control{font-size:11px}.play-actions .capo-control select{font-size:11px;max-width:70px;padding:4px}.play-title{min-width:180px}.control-bar{gap:12px}}
 
 .editor-account{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px;font-size:13px;color:#bed3c3}.editor-account>span{font-size:12px}.editor-account button{padding:6px 0;text-decoration:underline;text-underline-offset:4px}.login-description{color:var(--muted);line-height:1.6;margin:0 0 20px}.login-modal{max-width:460px}.login-modal .modal-actions{margin-top:24px}
+
+:root{--selected:#c3ed77;--selected-ink:#1d382b;--side-active:#35463a;--side-active-ink:#e5f5c6;--focus:#97c953}
+:root[data-theme="ocean"]{--ink:#192632;--muted:#687a89;--bg:#f1f5f9;--accent:#147aa0;--lime:#85d4e7;--border:#d8e3ec;--side:#142e40;--selected:#85d4e7;--selected-ink:#12374a;--side-active:#24475c;--side-active-ink:#c8f2fa;--focus:#3caec8}
+:root[data-theme="sunset"]{--ink:#34231e;--muted:#806b60;--bg:#fbf4ee;--accent:#b85331;--lime:#ffc477;--border:#eadbd0;--side:#40251f;--selected:#ffc477;--selected-ink:#492917;--side-active:#634035;--side-active-ink:#ffe5bd;--focus:#df844c}
+:root[data-theme="lavender"]{--ink:#2c2538;--muted:#786e89;--bg:#f6f3fa;--accent:#7551a8;--lime:#d9c5fa;--border:#e4dcef;--side:#2a2039;--selected:#d9c5fa;--selected-ink:#372354;--side-active:#49395f;--side-active-ink:#eee4ff;--focus:#9a75cd}
+:root[data-theme="slate"]{--ink:#252d35;--muted:#697581;--bg:#f1f3f5;--accent:#536575;--lime:#c2ccd6;--border:#dce1e5;--side:#262f38;--selected:#c2ccd6;--selected-ink:#293743;--side-active:#414d58;--side-active-ink:#e5edf3;--focus:#8298aa}
+.song-item.selected{background:var(--selected);color:var(--selected-ink)}
+.brand-icon{color:var(--selected-ink)}
+.filter-row button.active{background:var(--side-active);color:var(--side-active-ink)}
+.library-options button.active{color:var(--side-active-ink)}
+.key-buttons button.active{background:color-mix(in srgb,var(--accent) 14%,white);color:var(--accent)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline-color:var(--focus)}
+.theme-picker{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:9px 11px;border:1px solid #516457;border-radius:8px;background:var(--side);color:#f4f6f5;font-size:12px}
+.theme-picker select{max-width:112px;border:0;background:transparent;color:inherit;font-size:12px;cursor:pointer}
+.theme-picker option{background:#fff;color:#212827}
