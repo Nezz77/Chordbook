@@ -1,46 +1,106 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# Dependencies and package-manager caches
+node_modules/
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+/.npm/
+/.pnpm-store/
 
-# testing
-/coverage
-
-# next.js
+# Generated application output and caches
 /.next/
 /.vinext/
+/dist/
 /out/
+/.output/
+/.vite/
+/.cache/
+/.turbo/
+*.tsbuildinfo
+next-env.d.ts
 
-# misc
-.DS_Store
+# Test output
+/coverage/
+/.nyc_output/
+/test-results/
+/playwright-report/
+/blob-report/
+
+# Local environment and credentials (sanitized examples may be committed)
+.env
+.env.*
+!.env.example
+!.env.*.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
 *.pem
+*.key
+*.p12
+*.pfx
+/.aws/
 
-# debug
+# Logs
+*.log
+/logs/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Local databases; keep db/ and drizzle/ source and migrations
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-shm
+*.sqlite3-wal
 
-# vercel
-.vercel
-
-# typescript
-next-env.d.ts
-/dist/
+# Hosting and checkout-local tool state
 /.wrangler/
-# Checkout-local execution profile and tool state; never publish them.
 /.sites-runtime/
+/.vercel/
+/.netlify/
 /.agents/
 /.codex/
+/.openai/
+
+# Generated songbooks, screenshots, deployment archives and scratch work
 /outputs/
 /work/
+/tmp/
+/temp/
+/artifacts/
+/exports/
+/screenshots/
+/backups/
+/*.pdf
+/*.zip
+/*.tar
+/*.tar.gz
+/*.tgz
+# Keep public/ assets, lib/ chord data and their license files.
+
+# Machine-specific editor settings and temporary files
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+*.orig
+*.rej
+*.tmp
+*.bak
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini

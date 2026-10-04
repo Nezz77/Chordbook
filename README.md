@@ -1,27 +1,56 @@
 # Chordroom
 
-A private guitar songbook with a searchable library, chord transposition, saved key choices, a sheet editor, and PDF export.
+A guitar songbook with public viewing and password-protected editing. Built with Next.js, React and Neon Postgres for deployment on Vercel.
 
-## Included collection
+## Features
 
-48 title entries: the user's 30 individually named songs plus 18 verified Channuka release titles and variants. Channuka's listing is a researched starting collection, not a guarantee of an exhaustive discography. The Dangakara Hadakari lyrics and chord positions were transcribed from the image the user supplied. Other entries intentionally await user-supplied sheets; this application does not scrape or redistribute third-party lyrics.
+- Search English and Sinhala songs (Sinhala sheets use English-letter transliteration).
+- Transpose chords, including minor, seventh and slash chords; choose a capo independently and see the sounding key.
+- Guitar fingering diagrams and a fullscreen song view that fits the sheet to the display.
+- Import text or ChordPro sheets and export individual songs or the collection as PDF.
+- Authenticated editors can add, edit and delete songs and save shared favourites, keys and capo settings.
+- Persistent Postgres storage, migrations and private backup/import tools.
 
-Catalog references: https://www.shazam.com/artist/channuka/1599136249 and https://music.apple.com/us/artist/channuka-devnindu/1475334263
+The starter collection contains 48 titles. Dangakara Hadakari and Good to Be contain the user-supplied sheets; other entries await supplied content. Channuka's entries are a starting collection, not an exhaustive discography. Guitar fingering data is credited in the app and its MIT license is in `public/chord-data-license.txt`.
 
-## Use
+## Local development
 
-- Choose a song, then select a key or use the semitone controls. Click Save key to retain the choice.
-- Add or edit songs with ChordPro inline chords (`[G]words`) or plain text with chords above lyrics. Import `.txt`, `.cho`, `.pro`, or `.chordpro` sheets.
-- Set the starting key to match the original sheet before transposing. Minor and slash-chord suffixes are retained; internal key changes move by the same interval.
-- Export a single song or the whole playable collection in the current keys. An optional checklist includes titles still awaiting lyrics.
-- Enter Sinhala lyrics in English-letter transliteration. The PDF typography is intended for English-letter song sheets.
+Use Node.js 24 and npm.
 
-## Storage and privacy
+```sh
+npm ci
+cp .env.example .env.local
+npm run auth:setup
+```
 
-Cloudflare D1 stores the personal library, favorites and selected keys. Access is protected by the owner-private Sites hosting policy; there is no second application sign-in. Reads merge the starter collection and all legacy per-user records in update order, preserving pre-update saved songs. New writes use a shared personal-songbook owner key and prepared statements. The site must remain private; making it public would require a separate write-authorization design. Failed saves preserve the editor contents. Add a song opens even during connection delays; the editor shows a retry action when saving is unavailable.
+If `.env.local` already exists, preserve it. Add a Neon `DATABASE_URL` to that private file. The login setup command asks for a username/password, stores a salted scrypt hash and generates a random session secret. The password is not stored as plain text.
 
-## Development
+```sh
+npm run db:migrate
+npm run dev
+```
 
-Use the provided npm scripts. `npm run dev` starts the preview. `npm run db:generate` produces migrations. The Sites build and deployment helpers preserve the hosting setup. The schema is in `db/schema.ts`; generated migrations live in `drizzle/`.
+Open http://localhost:5173. Without a configured database, the starter sheets remain visible but saving and login are unavailable. See [DEPLOYMENT.md](DEPLOYMENT.md) for Vercel setup and transferring existing songs.
 
-Validation completed: TypeScript check, production build, 300 transposition round trips, seventh/minor/slash-chord examples, two-line chord import, PDF generation and rendered-page inspection, browser transposition and saved-key reload, editor preview, responsive desktop/mobile layouts, and WebMCP valid/invalid inputs.
+## Storage and access
+
+Anyone can read the library, transpose temporarily, play fullscreen and export PDFs. Editing uses one shared account configured through server-only environment variables. Login creates a seven-day HttpOnly session cookie (Secure in production, SameSite=Strict). Every write checks both the session and the request origin. Login attempts are limited to ten per fifteen-minute window in Postgres, shared across server instances. Changing the username, password hash or session secret invalidates existing sessions. Never put these settings in `NEXT_PUBLIC_*` variables.
+
+Saved settings and favourites belong to the shared library. A visitor's temporary key/capo changes do not write to the database. Song deletions are stored as tombstones so deleted starter songs do not reappear. Imports preserve legacy records and skip records when the database already has the same or a newer timestamp.
+
+The database, environment files, backups, dependencies and generated build output are ignored by Git. Commit application source, configuration, the package lock, migration files and assets. The previous Cloudflare/Sites deployment is a separate installation; pushing this repository does not update its database or site.
+
+## Checks and maintenance
+
+```sh
+npm test
+npm run typecheck
+npm run build
+npm run lint
+npm run db:generate
+npm run db:export
+```
+
+Tests exercise the Postgres queries and Next.js route handlers with an embedded Postgres engine, including authenticated writes, public reads, session expiry, throttling, backup imports, deletions and outages. They do not connect to a live Neon account. `db:generate` creates SQL after schema changes; review it before `db:migrate`.
+
+Backups contain song content and belong outside Git. Use `npm run db:export -- backups/my-songbook.json` with a new filename, and `npm run db:import -- backups/my-songbook.json --dry-run` to validate before importing.

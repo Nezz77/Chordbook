@@ -5,7 +5,7 @@ export function buildSongbook(songs:Song[],includePending=true){
  const pdf=new jsPDF({unit:'pt',format:'a4'});const width=595.28,height=841.89,margin=42;let y=0;
  const clean=(s:string)=>s.replace(/[–—]/g,'-').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/…/g,'...').replace(/•/g,' / ');
  const text=(s:string,x:number,yy:number,size=11,font='helvetica',style='normal',color='#25372f')=>{pdf.setFont(font,style);pdf.setFontSize(size);pdf.setTextColor(color);pdf.text(clean(s),x,yy)};
- const header=(song?:Song,continued=false)=>{pdf.setFillColor('#172923');pdf.rect(0,0,width,7,'F');text('CHORDROOM / PERSONAL SONGBOOK',margin,34,8,'helvetica','bold','#647568');if(song){const titleLines=pdf.splitTextToSize(clean(song.title),460);pdf.setFont('helvetica','bold');pdf.setFontSize(21);const wrapped=pdf.splitTextToSize(clean(song.title)+(continued?' (continued)':''),width-margin*2);wrapped.forEach((s:string,i:number)=>text(s,margin,68+i*25,21,'helvetica','bold'));y=68+(wrapped.length-1)*25+22;text(`${song.artist||song.language} / Chord key: ${keyName(song)||'not set'} / Capo: ${song.capo||'none'} / Sounds: ${soundingKey(song)||'not set'}`,margin,y,9,'helvetica','normal','#647568');y+=22;pdf.setDrawColor('#dfe5df');pdf.line(margin,y,width-margin,y);y+=22;}else y=64;};
+ const header=(song?:Song,continued=false)=>{pdf.setFillColor('#172923');pdf.rect(0,0,width,7,'F');text('CHORDROOM / PERSONAL SONGBOOK',margin,34,8,'helvetica','bold','#647568');if(song){pdf.setFont('helvetica','bold');pdf.setFontSize(21);const wrapped=pdf.splitTextToSize(clean(song.title)+(continued?' (continued)':''),width-margin*2);wrapped.forEach((s:string,i:number)=>text(s,margin,68+i*25,21,'helvetica','bold'));y=68+(wrapped.length-1)*25+22;text(`${song.artist||song.language} / Chord key: ${keyName(song)||'not set'} / Capo: ${song.capo||'none'} / Sounds: ${soundingKey(song)||'not set'}`,margin,y,9,'helvetica','normal','#647568');y+=22;pdf.setDrawColor('#dfe5df');pdf.line(margin,y,width-margin,y);y+=22;}else y=64;};
  const next=(song?:Song,continued=false)=>{pdf.addPage();header(song,continued)};
  const ensure=(space:number,song?:Song)=>{if(y+space>height-48)next(song,true)};
  const lyricRows=(segments:{chord?:string;text:string}[],song:Song)=>{
@@ -14,7 +14,7 @@ export function buildSongbook(songs:Song[],includePending=true){
  for(const segment of segments){let content=clean(segment.text);let chord=segment.chord?chordFor(song,segment.chord):'';
  // Wrap whole chord/lyric segments first to keep chord anchors with their words.
  if(cursor&&cursor+Math.max(content.length,chord.length+1)>max)flush();
- do{let room=max-cursor;let take=Math.min(content.length,room);if(content.length>room){const space=content.lastIndexOf(' ',room-1);if(space>0)take=space+1;}
+ do{const room=max-cursor;let take=Math.min(content.length,room);if(content.length>room){const space=content.lastIndexOf(' ',room-1);if(space>0)take=space+1;}
  const chunk=content.slice(0,take);const occupied=Math.max(chunk.length,chord?chord.length+1:0,1);
  if(cursor+occupied>max){flush();continue;}
  lyrics=lyrics.padEnd(cursor,' ')+chunk;chords=chords.padEnd(cursor,' ')+chord;cursor+=occupied;content=content.slice(take);chord='';if(content)flush();
