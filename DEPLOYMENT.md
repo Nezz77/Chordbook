@@ -1,4 +1,4 @@
-# Deploy Chordroom to Vercel
+# Deploy Chordbook to Vercel
 
 This checkout is prepared for **Vercel + Neon Postgres**. The existing Sites URL remains a separate deployment. No new Vercel site or Neon database has been created by this migration.
 

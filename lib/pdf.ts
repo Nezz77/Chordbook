@@ -5,7 +5,7 @@ export function buildSongbook(songs:Song[],includePending=true){
  const pdf=new jsPDF({unit:'pt',format:'a4'});const width=595.28,height=841.89,margin=42;let y=0;
  const clean=(s:string)=>s.replace(/[–—]/g,'-').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/…/g,'...').replace(/•/g,' / ');
  const text=(s:string,x:number,yy:number,size=11,font='helvetica',style='normal',color='#25372f')=>{pdf.setFont(font,style);pdf.setFontSize(size);pdf.setTextColor(color);pdf.text(clean(s),x,yy)};
- const header=(song?:Song,continued=false)=>{pdf.setFillColor('#172923');pdf.rect(0,0,width,7,'F');text('CHORDROOM / PERSONAL SONGBOOK',margin,34,8,'helvetica','bold','#647568');if(song){pdf.setFont('helvetica','bold');pdf.setFontSize(21);const wrapped=pdf.splitTextToSize(clean(song.title)+(continued?' (continued)':''),width-margin*2);wrapped.forEach((s:string,i:number)=>text(s,margin,68+i*25,21,'helvetica','bold'));y=68+(wrapped.length-1)*25+22;text(`${song.artist||song.language} / Chord key: ${keyName(song)||'not set'} / Capo: ${song.capo||'none'} / Sounds: ${soundingKey(song)||'not set'}`,margin,y,9,'helvetica','normal','#647568');y+=22;pdf.setDrawColor('#dfe5df');pdf.line(margin,y,width-margin,y);y+=22;}else y=64;};
+ const header=(song?:Song,continued=false)=>{pdf.setFillColor('#172923');pdf.rect(0,0,width,7,'F');text('CHORDBOOK / PERSONAL SONGBOOK',margin,34,8,'helvetica','bold','#647568');if(song){pdf.setFont('helvetica','bold');pdf.setFontSize(21);const wrapped=pdf.splitTextToSize(clean(song.title)+(continued?' (continued)':''),width-margin*2);wrapped.forEach((s:string,i:number)=>text(s,margin,68+i*25,21,'helvetica','bold'));y=68+(wrapped.length-1)*25+22;text(`${song.artist||song.language} / Chord key: ${keyName(song)||'not set'} / Capo: ${song.capo||'none'} / Sounds: ${soundingKey(song)||'not set'}`,margin,y,9,'helvetica','normal','#647568');y+=22;pdf.setDrawColor('#dfe5df');pdf.line(margin,y,width-margin,y);y+=22;}else y=64;};
  const next=(song?:Song,continued=false)=>{pdf.addPage();header(song,continued)};
  const ensure=(space:number,song?:Song)=>{if(y+space>height-48)next(song,true)};
  const lyricRows=(segments:{chord?:string;text:string}[],song:Song)=>{
@@ -31,6 +31,6 @@ export function buildSongbook(songs:Song[],includePending=true){
  for(const row of lyricRows(line.segments||[],song)){const hasChord=!!row.chords.trim();ensure(hasChord?35:22,song);if(hasChord){text(row.chords,margin,y,11,'courier','bold','#157961');y+=13;}text(row.lyrics,margin,y,11,'courier');y+=22;}
  }
  }
- const count=pdf.getNumberOfPages();for(let page=1;page<=count;page++){pdf.setPage(page);pdf.setDrawColor('#dfe5df');pdf.line(margin,height-32,width-margin,height-32);text('CHORDROOM',margin,height-19,7,'helvetica','normal','#647568');text(`${page} / ${count}`,width-margin-30,height-19,7,'helvetica','normal','#647568');}
- pdf.setProperties({title:ready.length===1?ready[0].title+' - Chordroom':'Chordroom Songbook',author:'Personal songbook'});return pdf;
+ const count=pdf.getNumberOfPages();for(let page=1;page<=count;page++){pdf.setPage(page);pdf.setDrawColor('#dfe5df');pdf.line(margin,height-32,width-margin,height-32);text('CHORDBOOK',margin,height-19,7,'helvetica','normal','#647568');text(`${page} / ${count}`,width-margin-30,height-19,7,'helvetica','normal','#647568');}
+ pdf.setProperties({title:ready.length===1?ready[0].title+' - Chordbook':'Chordbook Songbook',author:'Personal songbook'});return pdf;
 }

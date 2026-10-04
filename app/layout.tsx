@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Chordroom | Your guitar songbook",
+  title: "Chordbook | Your guitar songbook",
   description: "Your songs, in your key. A personal guitar songbook with lyrics, transposition and PDF export.",
   icons: {
     icon: "/favicon.svg",
