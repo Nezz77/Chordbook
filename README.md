@@ -2,6 +2,10 @@
 
 A guitar songbook with public viewing and password-protected editing. Built with Next.js, React and Neon Postgres for deployment on Vercel.
 
+## Live site
+
+Visit [Chordroom](https://chordbook-eight.vercel.app). Anyone can browse the songbook; sign in with the editor account to add, edit or delete songs.
+
 ## Features
 
 - Search English and Sinhala songs (Sinhala sheets use English-letter transliteration).
