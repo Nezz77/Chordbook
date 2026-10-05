@@ -29,6 +29,8 @@
 :root[data-theme="slate"]{--ink:#252d35;--muted:#697581;--bg:#f1f3f5;--accent:#536575;--lime:#c2ccd6;--border:#dce1e5;--side:#262f38;--selected:#c2ccd6;--selected-ink:#293743;--side-active:#414d58;--side-active-ink:#e5edf3;--focus:#8298aa}
 .song-item.selected{background:var(--selected);color:var(--selected-ink)}
 .brand-icon{color:var(--selected-ink)}
+.brand{position:relative;padding-bottom:48px}
+.brand::after{content:"developed by Futuretech|NH";position:absolute;left:57px;top:46px;color:#a3b2a9;font-size:10px;font-weight:400;letter-spacing:0;white-space:nowrap}
 .filter-row button.active{background:var(--side-active);color:var(--side-active-ink)}
 .library-options button.active{color:var(--side-active-ink)}
 .key-buttons button.active{background:color-mix(in srgb,var(--accent) 14%,white);color:var(--accent)}
