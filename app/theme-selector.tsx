@@ -2,12 +2,14 @@
 
 import {useSyncExternalStore} from 'react';
 import {Moon,Sun,Palette} from 'lucide-react';
+import {GlassSelect} from './glass-select';
 
 const themes=['amber','forest','ocean','sunset','lavender','slate'] as const;
 type Theme=typeof themes[number];
 type Mode='dark'|'light';
 const accentKey='chordbook-color-theme';
 const modeKey='chordbook-display-mode';
+const swatches={amber:'#efaa73',forest:'#b7d99a',ocean:'#8acddd',sunset:'#f39c7e',lavender:'#c5b1e5',slate:'#bdcbd4'};
 let memoryAccent:Theme='amber';
 let memoryMode:Mode='dark';
 
@@ -34,7 +36,5 @@ export function ThemeSelector(){
 
 export function AccentPicker(){
   const theme=useSyncExternalStore(subscribe,getAccent,()=> 'amber' as Theme);
-  return <label className="theme-picker"><Palette size={14}/><span>Colour</span><select aria-label="Color theme" value={theme} onChange={event=>{const selected=themes.find(t=>t===event.target.value);if(selected){memoryAccent=selected;update(accentKey,selected)}}}>
-    {themes.map(value=><option value={value} key={value}>{value[0].toUpperCase()+value.slice(1)}</option>)}
-  </select></label>;
+  return <div className="theme-picker"><Palette size={14}/><GlassSelect label="Color theme" caption="Set the mood" value={theme} onChange={value=>{const selected=themes.find(t=>t===value);if(selected){memoryAccent=selected;update(accentKey,selected)}}} options={themes.map(value=>({value,label:value[0].toUpperCase()+value.slice(1),color:swatches[value]}))}/></div>;
 }
