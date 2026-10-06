@@ -26,7 +26,7 @@ export function GlassSelect({label,value,onChange,options,disabled=false,classNa
       <Select.Icon className="glass-select-chevron"><ChevronDown size={13}/></Select.Icon>
     </Select.Trigger>
     <Select.Portal container={container}>
-      <Select.Content className="glass-select-menu" position="popper" sideOffset={9} collisionPadding={12} align="start">
+      <Select.Content className="glass-select-menu" position="popper" sideOffset={9} collisionPadding={12} collisionBoundary={container} updatePositionStrategy="always" align="start">
         <div className="glass-select-caption" aria-hidden="true"><span/>{caption}</div>
         <Select.ScrollUpButton className="glass-select-scroll"><ChevronUp size={14}/></Select.ScrollUpButton>
         <Select.Viewport className="glass-select-viewport">
