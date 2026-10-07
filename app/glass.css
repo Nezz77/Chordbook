@@ -90,6 +90,29 @@ body{background-image:radial-gradient(ellipse at 80% 0%,var(--glow),transparent 
 .play-key .glass-select-trigger{display:flex;min-width:68px;width:auto;padding:7px 10px;color:var(--accent);font-size:14px}
 .play-toolbar{position:relative;z-index:1}
 
+/* A compact capo calculator below the chord diagrams. */
+.capo-finder{margin-top:24px;padding:17px 14px 0;border:1px solid var(--glass-edge);border-radius:19px;background:linear-gradient(140deg,var(--glass-shine),transparent 48%),var(--glass);box-shadow:var(--glass-shadow)}
+.capo-finder-heading{display:flex;align-items:center;gap:9px}
+.capo-finder-icon{display:grid;place-items:center;flex-shrink:0;width:30px;height:36px;border:1px solid color-mix(in srgb,var(--accent) 24%,transparent);border-radius:10px;background:var(--accent-soft);color:var(--accent)}
+.capo-finder-eyebrow{display:block;margin-bottom:4px;font-size:7px;letter-spacing:1.3px;color:var(--accent)}
+.capo-finder h3{margin:0;font-size:16px;font-weight:500;letter-spacing:-.5px}
+.practice-rail .capo-finder-intro{font-size:10px;line-height:1.6;margin:13px 0 18px}
+.capo-finder-fields{display:grid;gap:14px}
+.capo-finder-fields label{display:flex;flex-direction:column;gap:7px;position:relative;font-size:11px;color:var(--ink)}
+.capo-finder-fields label>span{display:contents;color:var(--muted)}
+.capo-finder-fields .glass-select-trigger{width:100%;min-height:42px;font-size:14px}
+.capo-finder .capo-find-button{width:100%;margin-top:17px;min-height:40px;padding:10px 12px;font-size:11px;justify-content:space-between;border-radius:11px}
+.capo-finder-feedback{margin-top:16px;border-top:1px solid var(--glass-edge)}
+.practice-rail .capo-finder-hint{font-size:10px;line-height:1.7;margin:13px 0 15px}
+.capo-result{padding:16px 0;animation:value-reveal .35s var(--ease-glass)}
+.capo-result-summary{display:flex;align-items:center;gap:10px}
+.capo-result-number{font-size:36px;font-weight:300;line-height:1;letter-spacing:-2px;color:var(--accent);font-variant-numeric:tabular-nums}
+.capo-result-summary>div{display:flex;flex-direction:column;gap:5px;min-width:0}
+.capo-result-summary strong{font-size:12px;font-weight:500;color:var(--ink)}
+.capo-result-summary>div>span{font-size:10px;line-height:1.6;color:var(--muted)}
+.practice-rail .capo-high-fret{margin:12px 0 0;font-size:10px;line-height:1.6;color:var(--muted)}
+@media(min-width:761px) and (max-width:1040px){.capo-finder{max-width:460px}.capo-finder-fields{grid-template-columns:1fr 1fr;gap:16px}}
+
 /* Six strings, a soft glow, and an honest indeterminate loading state. */
 body:has(.boot-loader){overflow:hidden}
 .boot-loader{position:fixed;inset:0;z-index:150;isolation:isolate;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg);color:var(--ink);opacity:1}

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import {AccentPicker,ThemeSelector} from './theme-selector';
 import {LoginDialog} from './login-dialog';
 import {ChordDiagrams} from './chord-diagrams';
+import {CapoFinder} from './capo-finder';
 import {PlayView} from './play-view';
 import {GlassSelect,capoOptions} from './glass-select';
 import {BootLoader} from './loading-screen';
@@ -113,6 +114,7 @@ export default function Home(){
       <div className="rail-heading"><h3>Chords you’ll play</h3><span>{String(chords.length).padStart(2,'0')}</span></div>
       <div className="chord-chips">{chords.map(ch=><span className={!FAMILIAR.has(ch)?'new-chord':''} key={ch} title={FAMILIAR.has(ch)?'In your familiar chord list':'Outside your familiar chord list'}>{ch}</span>)}</div>
       {!!chords.length&&<ChordDiagrams chords={chords} capo={song.capo||0}/>}
+      <CapoFinder key={`${song.id}:${song.key}:${song.transpose}:${song.capo||0}`} song={song}/>
       {song.content?<><p>{chords.every(c=>FAMILIAR.has(c))?'All of these chords are in your familiar list.':'Outlined chords are outside your familiar list.'}</p>{easy!==song.transpose&&<button className="easy-key" onClick={()=>changeKey(easy)}>Try an easier key · {keyName({...song,transpose:easy})}</button>}<div className="rail-divider"/><div className="setup-title">YOUR SETUP<SlidersHorizontal size={14}/></div><dl className="sheet-details"><div><dt>Sheet key</dt><dd>{song.key||'Not set'}</dd></div><div><dt>Chord key</dt><dd>{keyName(song)||'Not set'}</dd></div><div><dt>Capo</dt><dd>{song.capo?'Fret '+song.capo:'None'}</dd></div><div><dt>Sounds in</dt><dd>{soundingKey(song)||'Not set'}</dd></div><div><dt>Transpose</dt><dd>{song.transpose>6?song.transpose-12:song.transpose>0?'+'+song.transpose:song.transpose}</dd></div></dl><p>Every chord moves together. The song’s key changes stay intact.</p></>:<p>Your chord diagrams will appear here when you add a song sheet.</p>}
       {filter==='Channuka'&&<a className="catalog-link" href={catalogSource} target="_blank" rel="noreferrer">Browse artist catalog <ExternalLink size={12}/></a>}
      </aside>
