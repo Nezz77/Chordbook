@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import "./glass.css";
 
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-mode="dark" data-theme="amber" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{__html:`try{var r=document.documentElement,m=localStorage.getItem('chordbook-display-mode'),a=localStorage.getItem('chordbook-color-theme');r.dataset.mode=m==='light'?'light':'dark';if(['amber','forest','ocean','sunset','lavender','slate'].includes(a))r.dataset.theme=a}catch{}`}}/></head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
